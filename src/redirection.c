@@ -4,6 +4,7 @@
 The code finds the first index of a redirection character ('<' or '>') in a string,
 excluding characters within quotation marks. It returns 0 if there is no such character.
 */
+/* 
 int search_redir(char *entry)
 {
     int index;
@@ -19,18 +20,6 @@ int search_redir(char *entry)
     return 0;
 }
 
-int redir_len(char *entry,int len)
-{
-    while (entry[len] != '\0')
-    {
-        len += pass_quote(entry,len);
-        if(select_redir_symbol(entry) == 0 || spaceTypes)
-            return (len);
-        len++;
-    }
-    return (len);
-}
-
 int select_redir_symbol(char *entry)
 {
     if(ft_strncmp(entry,">>",2))
@@ -44,6 +33,19 @@ int select_redir_symbol(char *entry)
     else
         return 0;
 }
+
+int redir_len(char *entry,int len)
+{
+    while (entry[len] != '\0')
+    {
+        len += pass_quote(entry,len);
+        if(select_redir_symbol(entry) != 0 || spaceTypes(*entry))
+            return (len);
+        len++;
+    }
+    return (len);
+}
+
 
 // char *parse_type(int symbol, char *entry)
 // {
@@ -65,11 +67,11 @@ int redirection_operation(char *entry, t_redir *redir)
     symbol = select_redir_symbol(entry);
     len = redir_len(entry,(symbol%2));
     entry = parse_type(symbol,ft_substr(entry,0,len));
-    //open files and operations
+    //open files and operations ->parse
     return len;
 }
 
-void redirection(char **entry, t_redir *redir)
+void redirection(char **entry, t_redir *redir) //char ** döndürecek
 {
     int index;
     int redir_index;
@@ -82,7 +84,6 @@ void redirection(char **entry, t_redir *redir)
     if(redir_index == 0)
         return;
     len = redirection_operation(entry,redir);
-
     //del_red
     }
-}
+} */

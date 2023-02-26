@@ -24,27 +24,24 @@ int variable_len(char *data)
     return len;
 }
 
-char *get_variable_value(char *data, int *index, int *len)
+char *get_variable_value(char *data, int *len)
 {
-    int len;
     char *variable;
     char *variable_value;
 
+    *len = 0;
     if(*data != '$')
         return NULL;
     data++;
+    if(is_variable_char(*data))
+        return NULL;
     if(*data == '?')
-    if(!is_variable_char(*data))
+    //len = 2;
     //execve_builtin return değeri ataması
     *len  = variable_len(data);
-    variable = ft_substr(data,0,len);
+    variable = ft_substr(data,0,*len);
     variable_value = getenv(variable);
+    *len++;
     free(variable);
-
     return variable_value;
-}
-
-char *get_variable_text()
-{
-    
 }
