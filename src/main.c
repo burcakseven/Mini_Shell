@@ -2,7 +2,9 @@
 
 int main(int argc, char const *argv[])
 {
-    char *deneme= edit_data("merhaba",0,0,0);
-    
+    // while(1)
+    char *deneme= readline("|");
+    char *yzdr = edit_data(deneme,0,1,0);
+    printf("%s",yzdr);
     return 0;
 }
