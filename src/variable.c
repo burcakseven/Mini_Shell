@@ -33,15 +33,15 @@ char *get_variable_value(char *data, int *len)
     if(*data != '$')
         return NULL;
     data++;
-    if(is_variable_char(*data))
+    if(!is_variable_char(*data))
         return NULL;
-    if(*data == '?')
+    // if(*data == '?')
     //len = 2;
     //execve_builtin return değeri ataması
     *len  = variable_len(data);
     variable = ft_substr(data,0,*len);
     variable_value = getenv(variable);
-    *len++;
+    (*len)++;
     free(variable);
     return variable_value;
 }

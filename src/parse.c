@@ -63,16 +63,18 @@ char *edit_data(char *substring,int var_flag, int quote_flag, int len) //bundan 
 	holder = malloc(sizeof(char *) * 2);
     while (*substring != '\0')
     {
-        if(var_flag == 1 && quote_type(*substring) !=1)
+        if(var_flag == 1 && quote != 1)
         {
             holder[1] = get_variable_value(substring,&len);
 			holder[0] = optimize_holder(holder);
 			substring += len;
         }
-		if(quote_flag == 1) //quote varken ilerletilebilir? // okey gibi
+		if(quote_flag == 1) //quote varken ilerletilebilir? // okey gibi //$var varken bozunuyor
 		{
 			while(quote_type(*substring))
+			{
 				substring++;
+			}
 		}
 		if(is_regular_data(*substring,var_flag,quote_flag))
 		{
