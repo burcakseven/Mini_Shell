@@ -33,7 +33,8 @@ typedef struct	s_redir
 char *edit_data(char *substring,int var_flag, int quote_flag, int len);
 
 /* utils.c */
-int		quote_type(char quote, int hold);
+// int		quote_type(char quote, int hold);
+int quote_type(char quote);
 int		pass_quote(char *entry,int index);
 int		count_char(char *read, char input);
 char	*char_to_str(char ch);

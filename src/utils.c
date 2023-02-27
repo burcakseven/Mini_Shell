@@ -21,36 +21,47 @@ int count_char(char *read, char input)
 quote_type:
 It allows us to understand whether double quotes or single quotes come first.
 */
-int quote_type(char quote, int hold)
+int quote_type(char quote)
 {
+    static int hold = 0;
     if (quote == '\'' || quote == '\"')
     {
-        if(quote == '\'' && (hold == 0 || hold == 1))
-            return (Qt(hold,1));
-		else if(quote == '\"' && (hold == 0 || hold == 2 ))
-        	return (Qt(hold,2));
+        if(quote == '\''&&(hold == 0 || hold == 1))
+        {
+            if(hold == 0)
+                hold = 1;
+            else if(hold == 1)
+                hold = 0;
+            return (1);
+        }
+		else if(quote == '\"' && (hold == 0 || hold == 2 )){
+            if(hold == 0)
+                hold = (2);
+            else if (hold == 2)
+                hold = 0;
+            return(2);}
     }
-    return hold;
+    return 0;
 }
 
 /*
 pass_quote:
 Passes the quote part and returns its length.
 */
-int pass_quote(char *entry,int index)
+int pass_quote(char *entry,int index) //split_pipe için test edilecek
 {
     int in_quote;
     int len;
 
     entry += index;
     len = 0;
-    in_quote = quote_type(*entry,0);
-    while (entry[len] != '\0' && in_quote)
+    if(*entry != '\''&& *entry != '\"')
+        return 0;
+    quote_type(entry[len]);
+    while (entry[++len] != '\0')
     {
-        len++;
-        in_quote = quote_type(*entry,in_quote);
-        if (in_quote == 0)
-            len++;
+        if(quote_type(entry[len])!= 0)
+            return len+1;
     }
     return len;
 }
@@ -62,26 +73,3 @@ char *char_to_str(char ch)
     str[1] = '\0';
     return str;
 }
-
-// void *ft_realloc(void *ptr, size_t size)
-// {
-//     void *new_ptr = NULL;
-
-//     if (size == 0) {  // boyut sıfır ise bellek bloğunu serbest bırakır
-//         free(ptr);
-//         return NULL;
-//     }
-
-//     if (ptr == NULL) {  // bellek bloğu daha önce ayrılmamışsa, malloc() ile ayrılır
-//         return malloc(size);
-//     }
-
-//     new_ptr = malloc(size);  // yeni bellek bloğu oluşturulur
-
-//     if (new_ptr != NULL) {  // bellek bloğu başarıyla oluşturulduysa, eski veriler kopyalanır
-//         memcpy(new_ptr, ptr, size);
-//         free(ptr);  // eski bellek bloğu serbest bırakılır
-//     }
-
-//     return new_ptr;  // yeni bellek bloğunun adresi döndürülür
-// }

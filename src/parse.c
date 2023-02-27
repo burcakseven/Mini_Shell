@@ -4,7 +4,7 @@
 pipe_split:
 Split pipes except pipe in quote.
 */
-char **pipe_split(char *entry)
+char **pipe_split(char *entry) //test edilecek
 {
     char    **splitted;
     int     end;
@@ -34,46 +34,21 @@ char **pipe_split(char *entry)
 /*
 Holder[1] has new data in holder[0] old data merges it without memoryleak and returns.
 */
-char *optimize_holder(char **holder)
+char *optimize_holder(char **holder) // free kullanıldığında quote için segfault alıyorum
 {
     char *new_join_hold;
+	if(holder[0]== NULL && holder[1] == NULL)
+		return NULL;
 	if(holder[0] == NULL)
 		return holder[1];
 	if(holder[1] == NULL)
 		return holder[0];
 
     new_join_hold = ft_strjoin(holder[0],holder[1]);
-    free(holder[0]);
-    free(holder[1]);
+    // free(holder[0]);
+    // free(holder[1]);
 
     return (new_join_hold);
-}
-
-char *edit_quote(char *data, int len, int var_flag)// holder'in freelenmesi gerekiyor
-{
-	char	**holder;
-	int		variable_len;
-	int		q_type;
-
-	holder = malloc(sizeof(char *) * 2);
-	q_type = quote_type(*data++,0);
-	while (len > 0)
-	{
-		if(var_flag == 1 && *data == '$' && q_type == 2)
-		{
-			holder[1] = get_variable_value(data,&variable_len);
-			holder[0] = optimize_holder(holder);
-			data += variable_len;
-			len -= variable_len;
-		}
-		else
-		{
-			holder[1] = char_to_str(*data++);
-			holder[0] = optimize_holder(holder);
-			len--;
-		}
-	}
-	return holder[0];
 }
 
 /*
@@ -82,23 +57,22 @@ data bana len'inden ayrılmış şekilde gelecek örnek merhaba 2 uzunluğu alı
 char *edit_data(char *substring,int var_flag, int quote_flag, int len) //bundan çıkıtktan sonra substring free'lenebilir
 {
 	char	**holder;
+	int		quote;
 
+	quote = 0;
 	holder = malloc(sizeof(char *) * 2);
     while (*substring != '\0')
     {
-        if(var_flag == 1)
+        if(var_flag == 1 && quote_type(*substring) !=1)
         {
             holder[1] = get_variable_value(substring,&len);
 			holder[0] = optimize_holder(holder);
 			substring += len;
         }
-		len = pass_quote(substring,0);
-		if(quote_flag == 1 && len > 0)
+		if(quote_flag == 1) //quote varken ilerletilebilir? // okey gibi
 		{
-			printf("ım");
-			holder[1] = edit_quote(substring,len,var_flag);
-			holder[0] = optimize_holder(holder);
-			substring += len;
+			while(quote_type(*substring))
+				substring++;
 		}
 		if(is_regular_data(*substring,var_flag,quote_flag))
 		{

@@ -52,28 +52,28 @@ char *del_first_last_space(char *entry)
 }
 
 
-char *in_quote(char *entry, int var_flag)
-{
-    int     in_quote;
-    int     len;
-    char    *fixed_data;
-    int     index;
+// char *in_quote(char *entry, int var_flag)
+// {
+//     int     in_quote;
+//     int     len;
+//     char    *fixed_data;
+//     int     index;
 
-    in_quote = quote_type(*entry,0);
-    while (*entry != '\0' && in_quote != 0)
-    {
-        entry++;
-        //if flag
-        //getvar() //realloc gerekli
-        in_quote = quote_type(*entry,in_quote);
-        if(in_quote != 0)
-            fixed_data[index++] = *entry;
-        else
-        {
-            fixed_data[index] = '\0';
-            return fixed_data;
-        }
-    }
-    fixed_data[index] = '\0';
-    return fixed_data;
-}
+//     in_quote = quote_type(*entry,0);
+//     while (*entry != '\0' && in_quote != 0)
+//     {
+//         entry++;
+//         //if flag
+//         //getvar() //realloc gerekli
+//         in_quote = quote_type(*entry,in_quote);
+//         if(in_quote != 0)
+//             fixed_data[index++] = *entry;
+//         else
+//         {
+//             fixed_data[index] = '\0';
+//             return fixed_data;
+//         }
+//     }
+//     fixed_data[index] = '\0';
+//     return fixed_data;
+// }
