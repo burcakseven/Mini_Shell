@@ -16,17 +16,18 @@
 
 #define Qt(hold,num) ((hold+num) % (num*2))
 
+typedef struct	s_heredoc
+{
+	char *content;
+	struct s_heredoc *next;
+}				t_heredoc;
+
 typedef struct	s_redir
 {
-	int	*in;
-    int *in_index;
-    int in_len;
-	int	*out;
-    int out_len;
-    int *append;
-    int append_len;
-    char **heredoc;
-    int heredoc_len;
+	int	in;
+	int	out;
+    int append;
+    t_heredoc s_heredoc;
 }				t_redir;
 
 /* parse.c */

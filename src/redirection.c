@@ -86,4 +86,5 @@ void redirection(char **entry, t_redir *redir) //char ** döndürecek
     len = redirection_operation(entry,redir);
     //del_red
     }
-} */
+}
+ */

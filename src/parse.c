@@ -54,7 +54,7 @@ char *optimize_holder(char **holder) // free kullanıldığında quote için seg
 /*
 data bana len'inden ayrılmış şekilde gelecek örnek merhaba 2 uzunluğu alınıp yeni entry me olacak
 */
-char *edit_data(char *substring,int var_flag, int quote_flag, int len) //bundan çıkıtktan sonra substring free'lenebilir
+char *edit_data(char *substring,int var_flag, int quote_flag, int len) //optimize holder'ın içinde strjoin kullanırken segfault alıyorum
 {
 	char	**holder;
 	int		quote;
@@ -63,7 +63,7 @@ char *edit_data(char *substring,int var_flag, int quote_flag, int len) //bundan 
 	holder = malloc(sizeof(char *) * 2);
     while (*substring != '\0')
     {
-		if(quote_flag == 1) //quote varken ilerletilebilir? // okey gibi //$var varken bozunuyor
+		if(quote_flag == 1)
 		{
 			while(quote_type(*substring,&quote))
 				substring++;
