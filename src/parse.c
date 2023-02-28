@@ -14,12 +14,13 @@ char **pipe_split(char *entry) //test edilecek
     start = 0;
     end = 0;
     index = 0;
-    splitted = malloc(sizeof(char *) * (count_char(entry,'|') + 1));
+    splitted = malloc(sizeof(char *) * (count_char(entry,'|') + 2));
     while (entry[end] != '\0')
     {
         end += pass_quote(entry,end);
         if (entry[end] == '|')
         {
+			ft_substr(entry, start, (end - start));
             splitted[index] = ft_substr(entry, start, (end - start));
             start = end + 1;
             index++;
@@ -54,7 +55,7 @@ char *optimize_holder(char **holder) // free kullanıldığında quote için seg
 /*
 data bana len'inden ayrılmış şekilde gelecek örnek merhaba 2 uzunluğu alınıp yeni entry me olacak
 */
-char *edit_data(char *substring,int var_flag, int quote_flag, int len) //optimize holder'ın içinde strjoin kullanırken segfault alıyorum
+char *edit_data(char *substring,int var_flag, int quote_flag, int len) //optimize holder'ın içinde strjoin kullanırken segfault alıyorum nedeni holder[0]'ın üstüne yazmak
 {
 	char	**holder;
 	int		quote;

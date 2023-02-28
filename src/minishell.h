@@ -13,13 +13,19 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include "libft.h"
+#include <string.h>
 
 #define Qt(hold,num) ((hold+num) % (num*2))
 
+// typedef struct	s_heredoc
+// {
+// 	char *content;
+// 	struct s_heredoc *next;
+// }				t_heredoc;
 typedef struct	s_heredoc
 {
-	char *content;
-	struct s_heredoc *next;
+	int heredoc_fd;
+	char **limiter;
 }				t_heredoc;
 
 typedef struct	s_redir
@@ -50,5 +56,8 @@ int is_regular_data(char data, int var_flag, int quote_flag, int quote);
 
 /* variable.c */
 char *get_variable_value(char *data, int *len);
+
+/* prompt.c */
+char *add_symbol();
 
 #endif

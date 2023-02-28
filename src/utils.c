@@ -61,10 +61,10 @@ int pass_quote(char *entry,int index) //split_pipe için test edilecek
     len = 0;
     if(*entry != '\''&& *entry != '\"')
         return 0;
-    quote_type(entry[len],q_hold);
+    quote_type(entry[len],&q_hold);
     while (entry[++len] != '\0')
     {
-        if(quote_type(entry[len],q_hold)!= 0)
+        if(quote_type(entry[len],&q_hold)!= 0)
             return len+1;
     }
     reset_q_type(q_hold);
