@@ -51,6 +51,15 @@ char *del_first_last_space(char *entry)
 	return (ft_substr(entry,frst,len));
 }
 
+void reset_q_type(int q_hold)
+{
+    if(q_hold == 0)
+        return;
+    else if(q_hold == 1)
+        quote_type('\'',&q_hold);
+    else
+        quote_type('\"',&q_hold);
+}
 
 // char *in_quote(char *entry, int var_flag)
 // {

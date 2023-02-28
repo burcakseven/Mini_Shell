@@ -34,7 +34,7 @@ char *edit_data(char *substring,int var_flag, int quote_flag, int len);
 
 /* utils.c */
 // int		quote_type(char quote, int hold);
-int quote_type(char quote);
+int     quote_type(char quote,int *q_hold);
 int		pass_quote(char *entry,int index);
 int		count_char(char *read, char input);
 char	*char_to_str(char ch);
@@ -42,9 +42,10 @@ char	*char_to_str(char ch);
 /* utils2.c */
 int spaceTypes(char input);
 char *in_quote(char *entry, int var_flag);
+void reset_q_type(int q_hold);
 
 /* utils3.c */
-int is_regular_data(char data, int var_flag, int quote_flag);
+int is_regular_data(char data, int var_flag, int quote_flag, int quote);
 
 /* variable.c */
 char *get_variable_value(char *data, int *len);
