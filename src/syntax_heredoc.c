@@ -27,7 +27,7 @@ void fill_heredoc_limiter(char *entry,t_heredoc *h_data)
         else
             len++;
     }
-    printf("%i",len);
+    h_data->limiter[index] = malloc(len+1);
     ft_memcpy(h_data->limiter[index],entry,len);
     index++;
 }
@@ -41,9 +41,9 @@ int is_syntx_err(char *entry,int pipe_flag,int heredoc_flag,t_heredoc *heredoc)
     symbol = entry[index];
     if(symbol == '\0')
         return 1;
-    else if(symbol == '<' && pipe_flag)
+    else if(symbol == '<' && !pipe_flag)
         return 2;
-    else if (symbol == '>' && pipe_flag)
+    else if (symbol == '>' && !pipe_flag)
         return 3;
     else if (symbol == '|')
         return 4;
