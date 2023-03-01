@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+void print_syntx_err(int error)
+{
+    printf("syntax error near unexpected token ");
+    if(error == 1)
+        printf("\'newline\'");
+    else if(error == 2)
+        printf("\'<\'");
+    else if(error == 3)
+        printf("\'>\'");
+    else if(error == 4)
+        printf("\'|\'");
+    printf("\n");
+}
+
 int is_limiter(char symbol)
 {
     if (symbol == '\0' || spaceTypes(symbol))
@@ -89,13 +103,14 @@ int syntx_err(char *entry, t_heredoc *heredoc)
     while (entry[index] != '\0')
     {
         if (entry[index] == '<' || entry[index] == '>')
-        {
             error = err_type(entry,&index,heredoc);
-        }else if (entry[index] == '|')
+        else if (entry[index] == '|')
             error = err_type(entry,&index,heredoc);
         if(error)
+        {
+            print_syntx_err(error);
             return 1;
-
+        }
         pass_q = pass_quote(entry,index);
         if(pass_q > 0)
             index += pass_q;
@@ -111,13 +126,14 @@ int main(int argc, char const *argv[])
     char *entry;
     int error = 1;
     heredoc.limiter=malloc(sizeof(t_heredoc)*5);
+    heredoc.limiter[0] = malloc(10);
     while (error)
     {
         // if(entry != NULL)
         //     free(entry);
         entry = readline(add_symbol());
         error = syntx_err(entry,&heredoc);
-        printf("%s",heredoc.limiter[0]);
+        // printf("%s",heredoc.limiter[0]); printf kullandığımda memoryleak oluşuyo
     }
     //heredoc okuması burada
 }
