@@ -27,8 +27,8 @@ void fill_heredoc_limiter(char *entry,t_heredoc *h_data)
         else
             len++;
     }
+    printf("%i",len);
     ft_memcpy(h_data->limiter[index],entry,len);
-    printf("%s",h_data->limiter[0]);
     index++;
 }
 
@@ -38,17 +38,16 @@ int is_syntx_err(char *entry,int pipe_flag,int heredoc_flag,t_heredoc *heredoc)
     int index;
 
     index = pass_space(entry);
-    // entry[index-1] = symbol;
-    printf("|%s",entry);
+    symbol = entry[index];
     if(symbol == '\0')
         return 1;
-    else if(symbol == '<' &&pipe_flag)
+    else if(symbol == '<' && pipe_flag)
         return 2;
     else if (symbol == '>' && pipe_flag)
         return 3;
     else if (symbol == '|')
         return 4;
-    if(heredoc)
+    if(heredoc_flag)
         fill_heredoc_limiter(&entry[index],heredoc);
     return 0;
 }
@@ -57,7 +56,7 @@ int err_type(char *entry,int *index,t_heredoc *heredoc)
 {
     if (entry[*index] == '|')
     {
-        *index++;
+        (*index)++;
         return(is_syntx_err(&entry[*index],1,0,heredoc));
     }
     else if (!ft_strncmp(&entry[*index],"<<",2))
@@ -72,7 +71,7 @@ int err_type(char *entry,int *index,t_heredoc *heredoc)
     }
     else if(entry[*index] == '<' || entry[*index] == '>')
     {
-        *index++;
+        (*index)++;
         return(is_syntx_err(&entry[*index],0,0,heredoc));
     }
     return 0;
