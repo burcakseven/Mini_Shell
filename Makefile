@@ -16,8 +16,8 @@ LIBINC = ./libft/
 
 # Optimization and Compiler flags and commands
 CC = gcc
-CFLAGS = -lreadline -fsanitize=address
-#-Wall -Werror -Wextra 
+CFLAGS = -lreadline 
+#-Wall -Werror -Wextra -fsanitize=address
 
 # Debugging flags
 DEBUG = -g

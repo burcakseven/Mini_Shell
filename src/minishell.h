@@ -48,6 +48,7 @@ char	*char_to_str(char ch);
 
 /* utils2.c */
 int spaceTypes(char input);
+int pass_space(char *entry);
 // char *in_quote(char *entry, int var_flag);
 void reset_q_type(int q_hold);
 
