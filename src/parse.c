@@ -32,55 +32,31 @@ char **pipe_split(char *entry) //test edilecek
     return splitted;
 }
 
-/*
-Holder[1] has new data in holder[0] old data merges it without memoryleak and returns.
-*/
-char *optimize_holder(char **holder) // free kullanıldığında quote için segfault alıyorum
+char *edit_data(char *substring, int len)
 {
-    char *new_join_hold;
-	if(holder[0]== NULL && holder[1] == NULL)
-		return NULL;
-	if(holder[0] == NULL)
-		return holder[1];
-	if(holder[1] == NULL)
-		return holder[0];
-
-    new_join_hold = ft_strjoin(holder[0],holder[1]);
-    // free(holder[0]);
-    // free(holder[1]);
-
-    return (new_join_hold);
-}
-
-/*
-data bana len'inden ayrılmış şekilde gelecek örnek merhaba 2 uzunluğu alınıp yeni entry me olacak
-*/
-char *edit_data(char *substring,int var_flag, int quote_flag, int len) //optimize holder'ın içinde strjoin kullanırken segfault alıyorum nedeni holder[0]'ın üstüne yazmak
-{
-	char	**holder;
-	int		quote;
+	char *edited_data;
+	char *temp;
+	char *joined_data;
+	int quote;
 
 	quote = 0;
-	holder = malloc(sizeof(char *) * 2);
-    while (*substring != '\0')
-    {
-		if(quote_flag == 1)
+	joined_data = "";
+	while (*substring != '\0')
+	{
+		while (quote_type(*substring, &quote))
+			substring++;
+
+		if (quote != 1 && *substring == '$')
 		{
-			while(quote_type(*substring,&quote))
-				substring++;
-		}
-        if(var_flag == 1 && quote != 1 && *substring == '$')
-        {
-            holder[1] = get_variable_value(substring,&len);
-			holder[0] = optimize_holder(holder);
+			edited_data = get_variable_value(substring, &len);
 			substring += len;
-        }
-		else
-		{
-			holder[1] = char_to_str(*substring++);
-			holder[0] = optimize_holder(holder);
 		}
-    }
+		else
+			edited_data = char_to_str(*substring++);
+		temp = ft_strjoin(joined_data, edited_data);
+		joined_data = temp;
+	}
 	reset_q_type(quote);
-	return holder[0];
+	return joined_data;
 }
+

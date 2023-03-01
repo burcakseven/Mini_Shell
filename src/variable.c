@@ -33,15 +33,18 @@ char *get_variable_value(char *data, int *len)
     if(*data != '$')
         return NULL;
     data++;
-    if(!is_variable_char(*data))
+    (*len)++;
+    if(*data == '\''|| *data == '\"')
         return NULL;
+    if(!is_variable_char(*data))
+        return "$";
     // if(*data == '?')
     //len = 2;
     //execve_builtin return değeri ataması
-    *len  = variable_len(data);
-    variable = ft_substr(data,0,*len);
+    *len  += variable_len(data);
+    variable = ft_substr(data,0,(*len)-1);
+    //variable quote'u silen fonksiyon yazılacak
     variable_value = getenv(variable);
-    (*len)++;
     free(variable);
     return variable_value;
 }

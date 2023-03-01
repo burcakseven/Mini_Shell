@@ -38,7 +38,7 @@ typedef struct	s_redir
 
 /* parse.c */
 char **pipe_split(char *entry);
-char *edit_data(char *substring,int var_flag, int quote_flag, int len);
+char *edit_data(char *substring, int len);
 
 /* utils.c */
 int     quote_type(char quote,int *q_hold);
@@ -53,7 +53,7 @@ int pass_space(char *entry);
 void reset_q_type(int q_hold);
 
 /* utils3.c */
-int is_regular_data(char data, int var_flag, int quote_flag, int quote);
+// int is_regular_data(char data, int var_flag, int quote_flag, int quote);
 
 /* variable.c */
 char *get_variable_value(char *data, int *len);
