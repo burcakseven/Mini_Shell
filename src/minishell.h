@@ -61,4 +61,7 @@ char *get_variable_value(char *data, int *len);
 /* prompt.c */
 char *add_symbol();
 
+/* syntx_err.c */
+int syntx_err(char *entry, t_heredoc *heredoc);
+
 #endif
