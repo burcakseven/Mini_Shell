@@ -4,7 +4,7 @@
 The code finds the first index of a redirection character ('<' or '>') in a string,
 excluding characters within quotation marks. It returns 0 if there is no such character.
 */
-/* 
+/*
 int search_redir(char *entry)
 {
     int index;

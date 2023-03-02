@@ -45,6 +45,7 @@ void fill_heredoc_limiter(char *entry,t_heredoc *h_data)
     }
     h_data->limiter[index] = malloc(len+1);
     ft_memcpy(h_data->limiter[index],entry,len);
+    h_data->limiter[index][len] = '\0';
     index++;
     h_data->limiter[index] = NULL;
 }

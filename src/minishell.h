@@ -64,4 +64,7 @@ char *add_symbol();
 /* syntx_err.c */
 int syntx_err(char *entry, t_heredoc *heredoc);
 
+/* syntax_heredoc */
+char* append_char(char* str, char c);
+
 #endif
