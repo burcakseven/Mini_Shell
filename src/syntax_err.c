@@ -33,6 +33,8 @@ void fill_heredoc_limiter(char *entry,t_heredoc *h_data)
 
     pass = 0;
     len = 0;
+    if(h_data->limiter == NULL)
+        h_data->limiter=malloc(sizeof(t_heredoc)*5);
     while (is_limiter(entry[len]))//space '<' '>' ya da '|'
     {
         pass = pass_quote(entry,index);
@@ -44,6 +46,7 @@ void fill_heredoc_limiter(char *entry,t_heredoc *h_data)
     h_data->limiter[index] = malloc(len+1);
     ft_memcpy(h_data->limiter[index],entry,len);
     index++;
+    h_data->limiter[index] = NULL;
 }
 
 int is_syntx_err(char *entry,int pipe_flag,int heredoc_flag,t_heredoc *heredoc)

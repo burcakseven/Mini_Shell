@@ -43,15 +43,16 @@ void wait_limiter(char *heredoc_limit,int heredoc_fd)
 	char *readl;
 
 	quote_type = is_contain_quote(heredoc_limit);
-	edit_limiter = edit_data(heredoc_limit,0);
-	printf("%s",edit_limiter);
-	readl = edit_heredoc_read(quote_type);
-	while (strncmp(edit_limiter,readl,ft_strlen(readl)))// ft_strlen için
-	{
-		write(heredoc_fd,readl,ft_strlen(readl));
-		write(heredoc_fd,"\n",1);
-		readl = edit_heredoc_read(quote_type);
-	}
+	// edit_limiter = edit_data(heredoc_limit,0); //edit_data seg fault alıyo
+	// edit_data(heredoc_limit,0);
+	edit_limiter = heredoc_limit;
+	// readl = edit_heredoc_read(quote_type);
+	// while (strncmp(edit_limiter,readl,ft_strlen(readl)))
+	// {
+	// 	write(heredoc_fd,readl,ft_strlen(readl));
+	// 	write(heredoc_fd,"\n",1);
+	// 	readl = edit_heredoc_read(quote_type);
+	// }
 	
 }
 
@@ -75,15 +76,13 @@ int main(int argc, char const *argv[])
     t_heredoc heredoc;
     char *entry;
     int error = 1;
-    heredoc.limiter=malloc(sizeof(t_heredoc)*5);
+	heredoc.limiter = NULL;
     while (error)
     {
-        // if(entry != NULL)
-        //     free(entry);
         entry = readline(add_symbol());
         error = syntx_err(entry,&heredoc);
-        // printf("%s",heredoc.limiter[0]); printf kullandığımda memoryleak oluşuyo
     }
-	read_heredoc(&heredoc);
+	if(heredoc.limiter != NULL)
+		read_heredoc(&heredoc);
     //heredoc okuması burada
 }
