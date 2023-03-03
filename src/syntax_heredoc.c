@@ -77,18 +77,18 @@ void read_heredoc(t_heredoc *heredoc)
 	}
 }
 
-// int main(int argc, char const *argv[])
-// {
-//     t_heredoc heredoc;
-//     char *entry;
-//     int error = 1;
-// 	heredoc.limiter = NULL;
-//     while (error)
-//     {
-//         entry = readline(add_symbol());
-//         error = syntx_err(entry,&heredoc);
-//     }
-// 	if(heredoc.limiter != NULL)
-// 		read_heredoc(&heredoc);
-//     //heredoc okuması burada
-// }
+int main(int argc, char const *argv[])
+{
+    t_heredoc heredoc;
+    char *entry;
+    int error = 1;
+	heredoc.limiter = NULL;
+    while (error)
+    {
+        entry = readline(add_symbol());
+        error = syntx_err(entry,&heredoc);
+    }
+	if(heredoc.limiter != NULL)
+		read_heredoc(&heredoc);
+    //heredoc okuması burada
+}

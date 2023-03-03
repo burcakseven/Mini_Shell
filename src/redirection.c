@@ -4,7 +4,7 @@
 The code finds the first index of a redirection character ('<' or '>') in a string,
 excluding characters within quotation marks. It returns 0 if there is no such character.
 */
-/*
+// /*
 int search_redir(char *entry)
 {
     int index;
@@ -47,17 +47,41 @@ int redir_len(char *entry,int len)
 }
 
 
-// char *parse_type(int symbol, char *entry)
-// {
-//     if(symbol != 2)
-//     {
-//         entry = edit_data(); //quote kontrolü $ kontrolü (single quote içinde çalışmaz)
-//     }
-//     else
-//         entry = heredoc_parse;// heredoc'da eğer quote(herhangi) açılırsa heredoc var'ları çalıştırmıyor
+int set_std_file(int in_fd, int out_fd)
+{
+    if(STDIN_FILENO != in_fd && in_fd > 0)
+    {    
+        dup2(STDIN_FILENO,in_fd);
+        return in_fd;
+    }
+    if(STDOUT_FILENO != out_fd && out_fd > 0)
+    {
+        dup2(STDOUT_FILENO,out_fd);
+        return out_fd;
+    }
+    return 0;
+}
 
-//     return entry;
-// }
+void file_operations(char *redir_param,int symbol, t_redir *redir)
+{
+    char *edited_param;
+    int in_fd = STDIN_FILENO;
+    int out_fd = STDOUT_FILENO;
+
+    edited_param = edit_data(redir_param,0); // path'le birleştirilmesi gerekiyor
+    if (symbol == 1)
+        in_fd = open(edited_param, O_RDONLY);
+	else if (symbol == 2)
+        in_fd = redir->s_heredoc.heredoc_fd;//değişebilir (her pipe için heredoc'u nasıl depoluyorum?)
+	if (symbol == 3)
+    	out_fd = open(edited_param, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	else if (symbol == 4)
+    	out_fd = open(edited_param, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+        
+    if(set_std_file(in_fd,out_fd) == 0)
+        printf("deneme");
+    //file didnt opened
+}
 
 int redirection_operation(char *entry, t_redir *redir)
 {
@@ -65,13 +89,13 @@ int redirection_operation(char *entry, t_redir *redir)
     int len;
 
     symbol = select_redir_symbol(entry);
-    len = redir_len(entry,(symbol%2));
-    entry = parse_type(symbol,ft_substr(entry,0,len));
-    //open files and operations ->parse
+    len = redir_len(entry,(symbol%2)); // symbol doğru değil 4%2 = 0
+    entry = ft_substr(entry,(symbol%2),len);
+    file_operations(entry,symbol,redir);
     return len;
 }
 
-void redirection(char **entry, t_redir *redir) //char ** döndürecek
+void redirection(char *entry, t_redir *redir) //char ** döndürecek
 {
     int index;
     int redir_index;
@@ -79,12 +103,10 @@ void redirection(char **entry, t_redir *redir) //char ** döndürecek
 
     index = 0;
     while(entry[index])
-    {
-    redir_index = search_redir(entry[index]);
+    redir_index = search_redir(entry);
     if(redir_index == 0)
         return;
     len = redirection_operation(entry,redir);
     //del_red
-    }
 }
- */
+//  */

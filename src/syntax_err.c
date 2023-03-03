@@ -65,6 +65,7 @@ int is_syntx_err(char *entry,int pipe_flag,int heredoc_flag,t_heredoc *heredoc)
         return 3;
     else if (symbol == '|')
         return 4;
+    // if(pipe_flag) // redir_heredoc++;
     if(heredoc_flag)
         fill_heredoc_limiter(&entry[index],heredoc);
     return 0;
